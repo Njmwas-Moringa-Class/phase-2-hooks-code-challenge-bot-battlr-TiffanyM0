@@ -15,7 +15,8 @@ function BotsPage() {
 
   function pickBots(id){
     const botID = id;
-    return console.log(botID);
+    const idBot = battleBot.find((element)=> element === pickBots);
+    return console.log(botID, idBot);
   }
 
   const [army, setArmy] = useState([]);

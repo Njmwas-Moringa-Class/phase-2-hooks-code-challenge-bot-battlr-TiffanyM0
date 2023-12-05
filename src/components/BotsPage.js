@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import YourBotArmy from "./YourBotArmy";
 import BotCollection from "./BotCollection";
+// import BotSpecs from "./BotSpecs";
 
 // function BotsPage() {
 //   //start here with your code for step one
@@ -36,6 +37,7 @@ import BotCollection from "./BotCollection";
 
 function BotsPage() {
   const [battleBot, setBattleBot] = useState([]);
+
   useEffect(() => {
     fetch("http://localhost:8002/bots")
       .then((resp) => resp.json())
@@ -45,24 +47,35 @@ function BotsPage() {
   }, []);
 
   const [army, setArmy] = useState([]);
+  
   function pickBots(id) {
-    if (!army.some((bot) => bot.id === id)) {
-      const selectedBot = battleBot.find((bot) => bot.id === id);
-      setArmy((prevArmy) => [...prevArmy, selectedBot]);
+    let isBot = false; 
+    for (const bot of battleBot){
+      if (bot.id === id){
+        isBot = true;
+        break;
+      }
+      if (!isBot) {
+        const idBot = battleBot.find((bot) => bot.id === id);
+        setArmy([...army, idBot]);
+      }
     }
   }
 
   function removeBot(id) {
-    const updatedArmy = army.filter((bot) => bot.id !== id);
-    setArmy(updatedArmy);
+    const removeArmy = army.filter((bot) => bot.id !== id);
+    setArmy(removeArmy);
   }
 
   function deleteBot(id) {
-    // You should implement the logic to delete the bot from the backend
-    // For now, let's just log a message
-    console.log(`Deleting bot with id ${id} from backend`);
-
-    // Remove the bot from the frontend army
+    fetch(`http://localhost:8002/bots/${id}`, {
+      method: `DELETE`,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((resp) => resp.json())
+      .then(() => setArmy((army) => army.filter((bot) => bot.id !== id)));
     removeBot(id);
   }
 

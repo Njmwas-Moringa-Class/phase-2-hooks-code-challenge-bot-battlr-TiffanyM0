@@ -21,7 +21,7 @@ import BotCard from "./BotCard";
 // }
 
 
-function YourBotArmy({ army, removeBot, deleteBot }) {
+function YourBotArmy({ army, fun, deleteBot }) {
   return (
     <div className="ui segment inverted olive bot-army">
       <div className="ui five column grid">
@@ -31,7 +31,7 @@ function YourBotArmy({ army, removeBot, deleteBot }) {
             <BotCard
               key={bot.id}
               bot={bot}
-              removeBot={removeBot}
+              fun={fun}
               deleteBot={deleteBot}
             />
           ))}

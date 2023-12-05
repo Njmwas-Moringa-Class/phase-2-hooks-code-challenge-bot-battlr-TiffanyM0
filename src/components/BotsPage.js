@@ -46,18 +46,13 @@ function BotsPage() {
 
   const [army, setArmy] = useState([]);
   function pickBots(id) {
-    // Ensure that the bot is not already enlisted
     if (!army.some((bot) => bot.id === id)) {
-      // Find the selected bot from the battleBot array
       const selectedBot = battleBot.find((bot) => bot.id === id);
-
-      // Update the army state with the selected bot
       setArmy((prevArmy) => [...prevArmy, selectedBot]);
     }
   }
 
   function removeBot(id) {
-    // Filter out the bot with the given id from the army
     const updatedArmy = army.filter((bot) => bot.id !== id);
     setArmy(updatedArmy);
   }
@@ -73,8 +68,8 @@ function BotsPage() {
 
   return (
     <div>
-      <YourBotArmy army={army} removeBot={removeBot} deleteBot={deleteBot} />
-      <BotCollection bots={battleBot} pickBots={pickBots} />
+      <YourBotArmy army={army} fun={removeBot} deleteBot={deleteBot} />
+      <BotCollection bots={battleBot} fun={pickBots} />
     </div>
   );
 }

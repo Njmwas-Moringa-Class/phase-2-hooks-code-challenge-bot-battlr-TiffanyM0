@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import BotCard from "./BotCard";
 
-function BotCollection({bots, fun}) {
-  // Your code here
-  // See profiles of all bots rendered in BotCollection.
+export default function BotCollection({ bots, fun, deleteBot, onBotDelete }) {
+  const [collectionBots, setCollectionBots] = useState([]);
+
+  useEffect(() => {
+    setCollectionBots(bots);
+  }, [bots]);
+
+  const handleDeleteBot = (id) => {
+    setCollectionBots((prevBots) => prevBots.filter((bot) => bot.id !== id));
+    deleteBot(id);
+  };
+
   return (
     <div className="ui four column grid">
       <div className="row">
-        {/* Collection of all bots */}
-        {bots.map((bot)=> <BotCard key={bot.id} bot={bot} fun={fun}/>)}
+        {collectionBots.map((bot) => (
+          <BotCard
+            key={bot.id}
+            bot={bot}
+            fun={fun}
+            deleteBot={handleDeleteBot}
+          />
+        ))}
       </div>
     </div>
   );
 }
-
-export default BotCollection;

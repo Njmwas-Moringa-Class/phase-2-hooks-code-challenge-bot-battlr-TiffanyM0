@@ -16,19 +16,31 @@ export default function BotsPage() {
   const [army, setArmy] = useState([]);
 
 
+  // function pickBots(id) {
+  //   let isBot = false; 
+  //   for (const bot of bots){
+  //     if (bot.id === id){
+  //       isBot = true;
+  //       break;
+  //     }
+  //     if (!isBot) {
+  //       const idBot = bots.find((bot) => bot.id === id);
+  //       setArmy([...army, idBot]);
+  //     }
+  //   }
+  // }
+
   function pickBots(id) {
-    let isBot = false; 
-    for (const bot of bots){
-      if (bot.id === id){
-        isBot = true;
-        break;
-      }
-      if (!isBot) {
-        const idBot = bots.find((bot) => bot.id === id);
-        setArmy([...army, idBot]);
+    // using some() method instead of loop; 
+    const selectedBot = bots.find((bot) => bot.id === id);
+  
+    if (selectedBot) {
+      if (!army.some((b) => b.id === id)) {
+        setArmy((prevArmy) => [...prevArmy, selectedBot]);
       }
     }
   }
+  
 
   const removeBot = (id) => {
     setArmy((prevArmy) => prevArmy.filter((bot) => bot.id !== id));

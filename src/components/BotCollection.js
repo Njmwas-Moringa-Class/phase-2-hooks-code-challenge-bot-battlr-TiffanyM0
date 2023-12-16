@@ -1,22 +1,22 @@
 import React, { useState, useEffect } from "react";
 import BotCard from "./BotCard";
 
-export default function BotCollection({ bots, fun, deleteBot, onBotDelete }) {
-  const [collectionBots, setCollectionBots] = useState([]);
+export default function BotCollection({ bots, fun, deleteBot }) {
+  const [botsCollect, setBotsCollect] = useState([]);
 
   useEffect(() => {
-    setCollectionBots(bots);
+    setBotsCollect(bots);
   }, [bots]);
 
   const handleDeleteBot = (id) => {
-    setCollectionBots((prevBots) => prevBots.filter((bot) => bot.id !== id));
+    setBotsCollect((prevBots) => prevBots.filter((bot) => bot.id !== id));
     deleteBot(id);
   };
 
   return (
     <div className="ui four column grid">
       <div className="row">
-        {collectionBots.map((bot) => (
+        {botsCollect.map((bot) => (
           <BotCard
             key={bot.id}
             bot={bot}
